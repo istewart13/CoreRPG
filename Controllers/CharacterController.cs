@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using CoreRPG.Controllers.Services;
 using CoreRPG.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,21 +17,21 @@ namespace CoreRPG.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_characterService.GetAllCharacters());
+            return Ok(await _characterService.GetAllCharacters());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetSingle(int id)
+        public async Task<IActionResult> GetSingle(int id)
         {
-            return Ok(_characterService.GetCharacterById(id));
+            return Ok(await _characterService.GetCharacterById(id));
         }
 
         [HttpPost]
-        public IActionResult AddCharacter(Character character)
+        public async Task<IActionResult> AddCharacter(Character character)
         {
-            return Ok(_characterService.AddCharacter(character));
+            return Ok(await _characterService.AddCharacter(character));
         }
     }
 }
