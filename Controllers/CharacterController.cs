@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
+using CoreRPG.Controllers.Services;
 using CoreRPG.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,26 +8,29 @@ namespace CoreRPG.Controllers
     [Route("[controller]")]
     public class CharacterController : ControllerBase
     {
-        private static List<Character> characters = new List<Character> {
-            new Character { Id = 1, Name = "Aeris" },
-            new Character { Id = 2, Name = "Barrett" },
-            new Character { Id = 3, Name = "Cloud" }
-        };
+        private readonly ICharacterService _characterService;
+
+        public CharacterController(ICharacterService characterService)
+        {
+            _characterService = characterService;
+        }
 
         [HttpGet("GetAll")]
-        public IActionResult Get() {
-            return Ok(characters);
+        public IActionResult Get()
+        {
+            return Ok(_characterService.GetAllCharacters());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetSingle(int id) {
-            return Ok(characters.FirstOrDefault(c => c.Id == id));
+        public IActionResult GetSingle(int id)
+        {
+            return Ok(_characterService.GetCharacterById(id));
         }
 
         [HttpPost]
-        public IActionResult AddCharacter(Character character) {
-            characters.Add(character);
-            return Ok(characters);
+        public IActionResult AddCharacter(Character character)
+        {
+            return Ok(_characterService.AddCharacter(character));
         }
     }
 }
