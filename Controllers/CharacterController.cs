@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using CoreRPG.Controllers.DTOs.Character;
-using CoreRPG.Controllers.Services;
-using CoreRPG.Models;
+using CoreRPG.DTOs.Character;
+using CoreRPG.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreRPG.Controllers

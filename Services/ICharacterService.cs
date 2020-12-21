@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CoreRPG.Controllers.DTOs.Character;
+using CoreRPG.DTOs.Character;
 using CoreRPG.Models;
 
-namespace CoreRPG.Controllers.Services
+namespace CoreRPG.Services
 {
     public interface ICharacterService
     {

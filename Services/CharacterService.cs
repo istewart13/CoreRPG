@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using CoreRPG.Controllers.DTOs.Character;
+using CoreRPG.DTOs.Character;
 using CoreRPG.Models;
 
-namespace CoreRPG.Controllers.Services
+namespace CoreRPG.Services
 {
     public class CharacterService : ICharacterService
     {

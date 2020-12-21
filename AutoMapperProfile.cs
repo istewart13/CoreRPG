@@ -1,5 +1,5 @@
 using AutoMapper;
-using CoreRPG.Controllers.DTOs.Character;
+using CoreRPG.DTOs.Character;
 using CoreRPG.Models;
 
 namespace CoreRPG
