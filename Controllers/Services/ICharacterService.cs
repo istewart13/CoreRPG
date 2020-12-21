@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoreRPG.Controllers.DTOs.Character;
 using CoreRPG.Models;
 
 namespace CoreRPG.Controllers.Services
 {
     public interface ICharacterService
     {
-         Task<List<Character>> GetAllCharacters();
+         Task<List<GetCharacterDto>> GetAllCharacters();
 
-         Task<Character> GetCharacterById(int id);
+         Task<GetCharacterDto> GetCharacterById(int id);
 
-         Task<List<Character>> AddCharacter(Character newCharacter);
+         Task<List<GetCharacterDto>> AddCharacter(AddCharacterDto newCharacter);
     }
 }

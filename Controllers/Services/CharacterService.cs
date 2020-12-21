@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using CoreRPG.Controllers.DTOs.Character;
 using CoreRPG.Models;
 
 namespace CoreRPG.Controllers.Services
@@ -12,20 +14,26 @@ namespace CoreRPG.Controllers.Services
             new Character { Id = 2, Name = "Barrett" },
             new Character { Id = 3, Name = "Cloud" }
         };
-        public async Task<List<Character>> GetAllCharacters()
+        private readonly IMapper _mapper;
+
+        public CharacterService(IMapper mapper)
         {
-            return characters;
+            _mapper = mapper;
+        }
+        public async Task<List<GetCharacterDto>> GetAllCharacters()
+        {
+            return characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
         }
 
-        public async Task<Character> GetCharacterById(int id)
+        public async Task<GetCharacterDto> GetCharacterById(int id)
         {
-            return characters.FirstOrDefault(c => c.Id == id);
+            return _mapper.Map<GetCharacterDto>(characters.FirstOrDefault(c => c.Id == id));
         }
 
-        public async Task<List<Character>> AddCharacter(Character newCharacter)
+        public async Task<List<GetCharacterDto>> AddCharacter(AddCharacterDto newCharacter)
         {
-            characters.Add(newCharacter);
-            return characters;
+            characters.Add(_mapper.Map<Character>(newCharacter));
+            return characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
         }
     }
 }
