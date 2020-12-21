@@ -32,7 +32,9 @@ namespace CoreRPG.Controllers.Services
 
         public async Task<List<GetCharacterDto>> AddCharacter(AddCharacterDto newCharacter)
         {
-            characters.Add(_mapper.Map<Character>(newCharacter));
+            var character = _mapper.Map<Character>(newCharacter);
+            character.Id = characters.Max(c => c.Id) + 1;
+            characters.Add(character);
             return characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
         }
     }
