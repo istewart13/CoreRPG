@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using CoreRPG.DTOs.Character;
 using CoreRPG.Services;
@@ -32,6 +33,19 @@ namespace CoreRPG.Controllers
         public async Task<IActionResult> AddCharacter(AddCharacterDto character)
         {
             return Ok(await _characterService.AddCharacter(character));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+        {
+            GetCharacterDto response = null;
+            try {
+                response = await _characterService.UpdateCharacter(updatedCharacter);
+            } catch (Exception ex) {
+                return NotFound(ex.Message);
+            }
+
+            return Ok(response);
         }
     }
 }

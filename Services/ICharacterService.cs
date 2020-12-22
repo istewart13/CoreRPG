@@ -12,5 +12,7 @@ namespace CoreRPG.Services
          Task<GetCharacterDto> GetCharacterById(int id);
 
          Task<List<GetCharacterDto>> AddCharacter(AddCharacterDto newCharacter);
+
+         Task<GetCharacterDto> UpdateCharacter(UpdateCharacterDto updatedCharacter);
     }
 }
