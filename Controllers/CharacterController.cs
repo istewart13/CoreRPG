@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoreRPG.DTOs.Character;
 using CoreRPG.Services;
@@ -41,6 +42,19 @@ namespace CoreRPG.Controllers
             GetCharacterDto response = null;
             try {
                 response = await _characterService.UpdateCharacter(updatedCharacter);
+            } catch (Exception ex) {
+                return NotFound(ex.Message);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            List<GetCharacterDto> response = null;
+            try {
+                response = await _characterService.DeleteCharacter(id);
             } catch (Exception ex) {
                 return NotFound(ex.Message);
             }
