@@ -56,5 +56,18 @@ namespace CoreRPG.Services
 
             return _mapper.Map<GetCharacterDto>(character);
         }
+
+        public async Task<List<GetCharacterDto>> DeleteCharacter(int id)
+        {
+            Character character = null;
+            try {
+                character = characters.First(c => c.Id == id);
+                characters.Remove(character);
+            } catch (Exception ex) {
+                throw;
+            }
+
+            return characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+        }
     }
 }
