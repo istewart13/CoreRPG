@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,6 +37,24 @@ namespace CoreRPG.Services
             character.Id = characters.Max(c => c.Id) + 1;
             characters.Add(character);
             return characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+        }
+
+        public async Task<GetCharacterDto> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+        {
+            Character character = null;
+            try {
+                character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+                character.Name = updatedCharacter.Name;
+                character.Class = updatedCharacter.Class;
+                character.Defence = updatedCharacter.Defence;
+                character.HitPoints = updatedCharacter.HitPoints;
+                character.Intelligence = updatedCharacter.Intelligence;
+                character.Strength = updatedCharacter.Strength;
+            } catch (Exception ex) {
+                throw;
+            }
+
+            return _mapper.Map<GetCharacterDto>(character);
         }
     }
 }
