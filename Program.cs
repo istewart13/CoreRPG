@@ -14,7 +14,6 @@ namespace CoreRPG
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-            System.Console.WriteLine("Test commit to verify contribution graph on Github");
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
