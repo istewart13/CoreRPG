@@ -40,9 +40,9 @@ namespace CoreRPG.Services
         public async Task<List<GetCharacterDto>> AddCharacter(AddCharacterDto newCharacter)
         {
             var character = _mapper.Map<Character>(newCharacter);
-            character.Id = characters.Max(c => c.Id) + 1;
-            characters.Add(character);
-            return characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            await _context.Characters.AddAsync(character);
+            await _context.SaveChangesAsync();
+            return _context.Characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
         }
 
         public async Task<GetCharacterDto> UpdateCharacter(UpdateCharacterDto updatedCharacter)
