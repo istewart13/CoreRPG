@@ -49,13 +49,16 @@ namespace CoreRPG.Services
         {
             Character character = null;
             try {
-                character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+                character = await _context.Characters.FirstOrDefaultAsync(c => c.Id == updatedCharacter.Id);
                 character.Name = updatedCharacter.Name;
                 character.Class = updatedCharacter.Class;
                 character.Defence = updatedCharacter.Defence;
                 character.HitPoints = updatedCharacter.HitPoints;
                 character.Intelligence = updatedCharacter.Intelligence;
                 character.Strength = updatedCharacter.Strength;
+
+                _context.Characters.Update(character);
+                await _context.SaveChangesAsync();
             } catch (Exception ex) {
                 throw;
             }
