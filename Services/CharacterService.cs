@@ -12,11 +12,6 @@ namespace CoreRPG.Services
 {
     public class CharacterService : ICharacterService
     {
-        private static List<Character> characters = new List<Character> {
-            new Character { Id = 1, Name = "Aeris" },
-            new Character { Id = 2, Name = "Barrett" },
-            new Character { Id = 3, Name = "Cloud" }
-        };
         private readonly IMapper _mapper;
         private readonly DataContext _context;
 
@@ -49,13 +44,16 @@ namespace CoreRPG.Services
         {
             Character character = null;
             try {
-                character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+                character = await _context.Characters.FirstOrDefaultAsync(c => c.Id == updatedCharacter.Id);
                 character.Name = updatedCharacter.Name;
                 character.Class = updatedCharacter.Class;
                 character.Defence = updatedCharacter.Defence;
                 character.HitPoints = updatedCharacter.HitPoints;
                 character.Intelligence = updatedCharacter.Intelligence;
                 character.Strength = updatedCharacter.Strength;
+
+                _context.Characters.Update(character);
+                await _context.SaveChangesAsync();
             } catch (Exception ex) {
                 throw;
             }
@@ -67,13 +65,14 @@ namespace CoreRPG.Services
         {
             Character character = null;
             try {
-                character = characters.First(c => c.Id == id);
-                characters.Remove(character);
+                character = await _context.Characters.FirstAsync(c => c.Id == id);
+                _context.Characters.Remove(character);
+                await _context.SaveChangesAsync();
             } catch (Exception ex) {
                 throw;
             }
 
-            return characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            return _context.Characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
         }
     }
 }
