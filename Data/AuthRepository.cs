@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using CoreRPG.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreRPG.Data
 {
@@ -19,6 +20,10 @@ namespace CoreRPG.Data
 
         public async Task<int> Register(User user, string password)
         {
+            if (await UserExists(user.Username))
+            {
+                return -1;
+            }
             CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -28,9 +33,13 @@ namespace CoreRPG.Data
             return user.Id;
         }
 
-        public Task<bool> UserExists(string username)
+        public async Task<bool> UserExists(string username)
         {
-            throw new System.NotImplementedException();
+            if (await _context.Users.AnyAsync(x => x.Username.ToLower() == username.ToLower()))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
